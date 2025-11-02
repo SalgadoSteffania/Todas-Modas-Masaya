@@ -33,13 +33,13 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* ===== CAMPOS DE TEXTO ===== */
+/* Campos de texto */
 .input-group {
     position: relative;
     margin: 10px 0;
 }
 
-/* Icono principal (correo o candado) */
+/* iconos de los bloques de texto*/
 .input-group ion-icon:first-of-type {
     position: absolute;
     top: 50%;
@@ -52,7 +52,7 @@ h2 {
 /* Campo de entrada */
 .input-group input {
     width: 100%;
-    padding: 12px 40px 12px 38px; /* espacio para los iconos */
+    padding: 12px 40px 12px 38px; 
     border: 2px solid #f8b6c1;
     border-radius: 8px;
     outline: none;
@@ -65,11 +65,11 @@ h2 {
     box-shadow: 0 0 5px rgba(214,51,132,0.5);
 }
 
-/* ===== ICONO OJO (derecha) ===== */
+/* Icono de ojo en la contraseña*/
 .eye-icon {
     position: absolute;
     top: 50%;
-    right: 10px; /* 🔹 ahora sí se coloca al lado derecho */
+    right: 10px;
     transform: translateY(-50%);
     cursor: pointer;
     color: #d63384;
@@ -81,7 +81,7 @@ h2 {
     color: #b2226b;
 }
 
-/* ===== BOTÓN ===== */
+/* Boton de iniciar sesion*/
 button {
     background-color: #28a745;
     color: white;
@@ -98,7 +98,7 @@ button:hover {
     background-color: #218838;
 }
 
-/* ===== TOAST ===== */
+/* toast*/
 .toast {
     position: fixed;
     top: 20px;

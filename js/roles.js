@@ -55,10 +55,12 @@
     modalConf.setAttribute('aria-hidden','true');
   }
 
+  //TABLA
+
   async function cargarTabla(){
     tbody.innerHTML = `<tr><td colspan="4">Cargando...</td></tr>`;
     try{
-      const r = await fetch('modulos/roles/api_listar.php', {credentials:'same-origin'});
+      const r = await fetch('modulos/roles/listar.php', {credentials:'same-origin'});
       const data = await r.json();
       if(!Array.isArray(data) || data.length===0){
         tbody.innerHTML = `<tr><td colspan="4">Sin datos</td></tr>`;
@@ -92,12 +94,13 @@
     }
   }
 
+  //GUARDAR Y EDITAR
   async function guardarRol(e){
     e.preventDefault();
     const fd = new FormData(form);
     const url = (modo==='crear')
-      ? 'modulos/roles/api_crear.php'
-      : 'modulos/roles/api_actualizar.php';
+      ? 'modulos/roles/crear.php'
+      : 'modulos/roles/actualizar.php';
     try{
       const r = await fetch(url, {method:'POST', body: fd, credentials:'same-origin'});
       const res = await r.json();
@@ -114,12 +117,14 @@
     }
   }
 
+  //ELIMINAR
+
   async function eliminarRol(){
     if(!idEliminar) return cerrarConfirm();
     const fd = new FormData();
     fd.append('IdRol', idEliminar);
     try{
-      const r = await fetch('modulos/roles/api_eliminar.php', {method:'POST', body: fd, credentials:'same-origin'});
+      const r = await fetch('modulos/roles/eliminar.php', {method:'POST', body: fd, credentials:'same-origin'});
       const res = await r.json();
       cerrarConfirm();
       if(res.ok){
@@ -143,7 +148,8 @@
     });
   }
 
-  // Eventos
+  //EVENTOS
+
   btnNuevo?.addEventListener('click', abrirCrear);
   btnCancelar?.addEventListener('click', cerrarModal);
   form?.addEventListener('submit', guardarRol);
@@ -151,6 +157,5 @@
   btnSi?.addEventListener('click', eliminarRol);
   inputBuscar?.addEventListener('input', () => aplicarFiltro(inputBuscar.value));
 
-  // Init
   cargarTabla();
 })();

@@ -1,11 +1,13 @@
 <?php
+
 session_start();
 if (!isset($_SESSION['correo'])) { http_response_code(401); exit('No autorizado'); }
 require_once dirname(__DIR__, 2) . '/conexion.php';
 ?>
-<link rel="stylesheet" href="css/empleados.css">
+<link rel="stylesheet" href="css/vistas.css">
 
-<div class="empleados-wrapper">
+<!-- ESTE MODULO AUN SE ENCUENTRA EN PROCESO, COMO A LAS OPCIONES QUE PUEDE ACCEDER UN ROL-->
+<div class="vistas-wrapper">
   <h2 class="titulo-principal">Lista de Roles</h2>
 
   <div class="tabla-card">
@@ -17,7 +19,7 @@ require_once dirname(__DIR__, 2) . '/conexion.php';
       <input type="text" id="buscarRol" class="input-buscar" placeholder="Buscar por descripción o ID">
     </div>
 
-    <table class="tabla-empleados" id="tablaRoles">
+    <table class="tabla-vistas" id="tablaRoles">
       <thead>
         <tr>
           <th style="width:120px;">ID</th>

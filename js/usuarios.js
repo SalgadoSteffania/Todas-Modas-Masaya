@@ -35,9 +35,9 @@
     setTimeout(()=> toast.style.display='none', 2200);
   }
 
-  // Combos
+//COMBOBOX
   async function cargarRoles(){
-    const r = await fetch('modulos/usuarios/api_combo_roles.php', {credentials:'same-origin'});
+    const r = await fetch('modulos/usuarios/combo_roles.php', {credentials:'same-origin'});
     const data = await r.json();
     rolSel.innerHTML = '<option value="">Seleccione rol</option>';
     data.forEach(x => {
@@ -47,7 +47,7 @@
     });
   }
   async function cargarEmpleados(){
-    const r = await fetch('modulos/usuarios/api_combo_empleados.php', {credentials:'same-origin'});
+    const r = await fetch('modulos/usuarios/combo_empleados.php', {credentials:'same-origin'});
     const data = await r.json();
     cedulaSel.innerHTML = '<option value="">Seleccione cédula</option>';
     data.forEach(x => {
@@ -96,7 +96,7 @@
   async function cargarTabla(){
     tbody.innerHTML = `<tr><td colspan="7">Cargando...</td></tr>`;
     try{
-      const r = await fetch('modulos/usuarios/api_listar.php', {credentials:'same-origin'});
+      const r = await fetch('modulos/usuarios/listar.php', {credentials:'same-origin'});
       const data = await r.json();
       if(!Array.isArray(data) || data.length===0){
         tbody.innerHTML = `<tr><td colspan="7">Sin datos</td></tr>`;
@@ -123,12 +123,9 @@
           </td>
         `;
         tr.querySelector('.btn-edit').addEventListener('click', async () => {
-          // necesitamos IdRol para setear el combo al editar; lo pedimos de nuevo con join
-          // (alternativamente podrías añadir IdRol en api_listar.php)
+          
           const detalle = {...u};
-          // Si no viene IdRol, opcional: podrías agregar en api_listar SELECT u.IdRol AS IdRol
-          // y aquí usar detalle.IdRol = u.IdRol;
-          // Para mantenerlo sencillo, ajusta api_listar y añade u.IdRol.
+        
           abrirEditar(detalle);
         });
         tr.querySelector('.btn-del').addEventListener('click', () => abrirConfirm(u.IdUsuario));
@@ -141,7 +138,7 @@
     }
   }
 
-  // Guardar / Eliminar
+  // GUARDAR Y EDITAR
   async function guardar(e){
     e.preventDefault();
 
@@ -151,8 +148,8 @@
 
     const fd = new FormData(form);
     const url = (modo==='crear')
-      ? 'modulos/usuarios/api_crear.php'
-      : 'modulos/usuarios/api_actualizar.php';
+      ? 'modulos/usuarios/crear.php'
+      : 'modulos/usuarios/actualizar.php';
 
     try{
       const r = await fetch(url, {method:'POST', body: fd, credentials:'same-origin'});
@@ -170,12 +167,13 @@
     }
   }
 
+  //ELIMINAR
   async function eliminarUsuario(){
     if(!idEliminar) return cerrarConfirm();
     const fd = new FormData();
     fd.append('IdUsuario', idEliminar);
     try{
-      const r = await fetch('modulos/usuarios/api_eliminar.php', {method:'POST', body: fd, credentials:'same-origin'});
+      const r = await fetch('modulos/usuarios/eliminar.php', {method:'POST', body: fd, credentials:'same-origin'});
       const res = await r.json();
       cerrarConfirm();
       if(res.ok){

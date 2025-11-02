@@ -3,9 +3,9 @@ session_start();
 if (!isset($_SESSION['correo'])) { http_response_code(401); exit('No autorizado'); }
 require_once dirname(__DIR__, 2) . '/conexion.php';
 ?>
-<link rel="stylesheet" href="css/empleados.css">
+<link rel="stylesheet" href="css/vistas.css">
 
-<div class="empleados-wrapper">
+<div class="vistas-wrapper">
   <h2 class="titulo-principal">Lista de Usuarios</h2>
 
   <div class="tabla-card">
@@ -34,7 +34,7 @@ require_once dirname(__DIR__, 2) . '/conexion.php';
   </div>
 </div>
 
-<!-- Modal Crear/Editar -->
+<!-- Modal Crear y Editar -->
 <div class="modal" id="modalUsuario" aria-hidden="true">
   <div class="modal-content" style="max-height:80vh;overflow:auto;">
     <div class="modal-header">
@@ -94,7 +94,7 @@ require_once dirname(__DIR__, 2) . '/conexion.php';
   </div>
 </div>
 
-<!-- Confirm Eliminar -->
+<!-- Confirmar al  Eliminar -->
 <div class="modal" id="modalConfirmUsuario" aria-hidden="true">
   <div class="modal-content small">
     <div class="modal-header">

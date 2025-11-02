@@ -1,16 +1,16 @@
-/* ===== Tipografía Trodion (opcional, colócala en fonts/Trodion.ttf) ===== */
+/* Encabezado*/
 @font-face {
   font-family: 'Trodion';
   src: url('../fonts/Trodion.ttf') format('truetype');
   font-display: swap;
 }
 
-/* ===== Variables globales ===== */
+/* Colores globales*/
 :root {
   --pink: #ff8ab1;
   --sidebar: rgba(165, 162, 227, 0.9);
-  --icon: #6c6c6c; /* gris medio */
-  --active: #e014ca; /* fucsia activo */
+  --icon: #6c6c6c; 
+  --active: #e014ca; 
 }
 
 * {
@@ -19,14 +19,15 @@
   padding: 0;
 }
 
+/* Fuente general*/
 html, body {
   height: 100%;
   background: #f6f6f6;
   font-family: 'Roboto', sans-serif;
-  font-size: 15px; /* 🔹 tamaño base */
+  font-size: 15px; 
 }
 
-/* ===== Barra superior ===== */
+/* Barra superio */
 .top-bar {
   position: fixed;
   top: 0;
@@ -51,7 +52,7 @@ html, body {
   font-weight: 700;
 }
 
-/* ===== Íconos de la parte derecha ===== */
+/*iconos del menú*/
 .top-actions {
   margin-left: auto;
   display: flex;
@@ -74,7 +75,7 @@ html, body {
   opacity: 1;
 }
 
-/* ===== Contenedor general ===== */
+/*Contenedor general*/
 .container {
   position: fixed;
   top: 55px;
@@ -85,7 +86,7 @@ html, body {
   overflow: hidden;
 }
 
-/* ===== Sidebar ===== */
+/* barra lateral*/
 .sidebar {
   width: 260px;
   background: var(--sidebar);
@@ -94,7 +95,7 @@ html, body {
   overflow: visible;
 }
 
-/* Perfil superior */
+/* Usuario */
 .profile {
   text-align: center;
   padding: 20px 14px 8px;
@@ -123,7 +124,7 @@ html, body {
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-/* ===== Sección blanca ===== */
+/* Sección de lista de opciones*/
 .nav-section {
   background: #fff;
   border-top: 1px solid rgba(0, 0, 0, 0.12);
@@ -141,7 +142,7 @@ html, body {
   text-transform: uppercase;
 }
 
-/* ===== Menú principal ===== */
+/*Menú de opciones*/
 .menu ul {
   list-style: none;
 }
@@ -171,7 +172,7 @@ html, body {
   filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(0%) hue-rotate(178deg) brightness(88%) contrast(90%);
 }
 
-/* Item activo */
+/* Item en uso*/
 .item.activo {
   color: var(--active);
   font-weight: 700;
@@ -180,7 +181,7 @@ html, body {
   filter: invert(21%) sepia(97%) saturate(6146%) hue-rotate(303deg) brightness(96%) contrast(102%);
 }
 
-/* ===== Submenús ===== */
+/*Submenús*/
 .submenu {
   position: relative;
 }
@@ -236,7 +237,7 @@ html, body {
   background: rgba(0, 0, 0, 0.03);
 }
 
-/* ===== Contenido principal ===== */
+/*Contenido principal*/
 main#contenido {
   flex: 1 1 auto;
   background: #f6f6f6;

@@ -1,8 +1,7 @@
-// js/empleados.js
 (() => {
   const $  = (s) => document.querySelector(s);
 
-  // --------- Elementos principales ----------
+
   const modal        = $('#modalEmpleado');
   const form         = $('#formEmpleado');
   const modalTitulo  = $('#modalTitulo');
@@ -16,10 +15,11 @@
   const toast        = $('#toast');
   const inputBuscar  = $('#buscarEmpleado');
 
-  let modo = 'crear';               // 'crear' | 'editar'
+  let modo = 'crear';             
   let cedulaAEliminar = null;
 
-  // --------- Utilitarios ----------
+ 
+  //CREAR Y EDITAR
   function showToast(msg, type='success'){
     if (!toast) return;
     toast.textContent = msg;
@@ -63,7 +63,7 @@
     modalConfirm.setAttribute('aria-hidden','true');
   }
 
-  // --------- Tabla ----------
+  // TABLA
   async function cargarTabla(){
     const tbody = document.querySelector('#tablaEmpleados tbody');
     if (!tbody) return;
@@ -71,7 +71,7 @@
     tbody.innerHTML = `<tr><td colspan="8">Cargando...</td></tr>`;
 
     try {
-      const r = await fetch('modulos/empleados/api_listar.php', { credentials:'same-origin' });
+      const r = await fetch('modulos/empleados/listar.php', { credentials:'same-origin' });
       const data = await r.json();
 
       if (!Array.isArray(data) || !data.length){
@@ -115,13 +115,13 @@
     }
   }
 
-  // --------- Guardar (crear/editar) ----------
+  // CREAR Y EDITAR
   async function guardarEmpleado(ev){
     ev.preventDefault();
     const fd  = new FormData(form);
     const url = (modo === 'crear')
-      ? 'modulos/empleados/api_crear.php'
-      : 'modulos/empleados/api_actualizar.php';
+      ? 'modulos/empleados/crear.php'
+      : 'modulos/empleados/actualizar.php';
 
     try {
       const r   = await fetch(url, { method:'POST', body: fd, credentials:'same-origin' });
@@ -139,19 +139,19 @@
     }
   }
 
-  // --------- Eliminar ----------
+  // ELIMINAR
   async function eliminarEmpleado(){
     if (!cedulaAEliminar){ return cerrarConfirm(); }
     try {
       const fd = new FormData();
       fd.append('Cedula', cedulaAEliminar);
 
-      const r   = await fetch('modulos/empleados/api_eliminar.php', { method:'POST', body: fd, credentials:'same-origin' });
+      const r   = await fetch('modulos/empleados/eliminar.php', { method:'POST', body: fd, credentials:'same-origin' });
       const res = await r.json();
 
       cerrarConfirm();
 
-      if (res.ok){
+      if (res .ok){
         await cargarTabla();
         showToast('Se eliminó con éxito', 'success');
       } else {
@@ -163,19 +163,19 @@
     }
   }
 
-  // --------- Búsqueda (en vivo) ----------
+  // BUSCAR
   function aplicarFiltro(q){
     q = (q || '').toLowerCase();
     const filas = document.querySelectorAll('#tablaEmpleados tbody tr');
     filas.forEach(tr => {
-      // cédula, nombre, apellido (primeras 3 columnas)
+      // cédula, nombre, apellido 
       const celdas = Array.from(tr.children).slice(0, 3);
       const hit = celdas.some(td => (td.textContent || '').toLowerCase().includes(q));
       tr.style.display = hit ? '' : 'none';
     });
   }
 
-  // --------- Eventos ----------
+  //EVENTOS
   btnNuevo   && btnNuevo.addEventListener('click', abrirModalCrear);
   btnCancelar&& btnCancelar.addEventListener('click', cerrarModal);
   form       && form.addEventListener('submit', guardarEmpleado);
@@ -185,6 +185,5 @@
 
   inputBuscar&& inputBuscar.addEventListener('input', () => aplicarFiltro(inputBuscar.value));
 
-  // Primera carga
   cargarTabla();
 })();

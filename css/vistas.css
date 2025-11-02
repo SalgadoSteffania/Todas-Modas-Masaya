@@ -1,9 +1,9 @@
-/* ===== CONTENEDOR GENERAL ===== */
-.empleados-wrapper {
+/*Contenedor generla*/
+.vistas-wrapper {
   padding: 4px 0;
 }
 
-/* ===== TÍTULO PRINCIPAL (FUERA DEL BLOQUE BLANCO) ===== */
+/*Nombre del modulo*/
 .titulo-principal {
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
@@ -11,7 +11,7 @@
   margin: 0 0 10px 6px;
 }
 
-/* ===== TARJETA BLANCA ===== */
+/* Contener de opciones*/
 .tabla-card {
   background: #fff;
   border-radius: 8px;
@@ -20,7 +20,7 @@
   padding: 14px 16px 16px;
 }
 
-/* ===== CABECERA DEL BLOQUE ===== */
+
 .card-top {
   display: flex;
   gap: 16px;
@@ -29,7 +29,7 @@
   justify-content: flex-start;
 }
 
-/* ===== BOTÓN "NUEVO EMPLEADO" ===== */
+/* Boton de agregar */
 .btn-nuevo {
   background: #e014ca;
   color: #fff;
@@ -47,7 +47,7 @@
   filter: brightness(0.95);
 }
 
-/* ===== BARRA DE BÚSQUEDA ===== */
+/* Barra de busqueda */
 .card-actions {
   margin: 8px 0 10px;
 }
@@ -67,33 +67,33 @@
   box-shadow: 0 0 0 3px rgba(224, 20, 202, 0.12);
 }
 
-/* ===== TABLA ===== */
-.tabla-empleados {
+/* Tabla */
+.tabla-vistas {
   width: 100%;
   border-collapse: collapse;
 }
 
-.tabla-empleados thead th {
+.tabla-vistas thead th {
   text-align: left;
   font-weight: 700;
   padding: 12px 10px;
   border-bottom: 1px solid #e5e5e5;
   font-family: 'Roboto', sans-serif;
-  font-size: 15px; /* 🔹 Roboto 15 */
+  font-size: 15px; 
 }
 
-.tabla-empleados tbody td {
+.tabla-vistas tbody td {
   padding: 12px 10px;
   border-bottom: 1px solid #f0f0f0;
   font-family: 'Roboto', sans-serif;
-  font-size: 15px; /* 🔹 Roboto 15 */
+  font-size: 15px;
 }
 
-.tabla-empleados tbody tr:hover {
+.tabla-vistas tbody tr:hover {
   background: #fafafa;
 }
 
-/* ===== BOTONES DE ACCIÓN (EDITAR Y ELIMINAR) ===== */
+/* ==Iconos de editar y eliminar*/
 .btn-icon {
   width: 32px;
   height: 32px;
@@ -114,7 +114,7 @@
   display: block;
 }
 
-/* ===== MODAL (VENTANA FLOTANTE) ===== */
+/* ventanas flotantes*/
 .modal {
   position: fixed;
   inset: 0;
@@ -148,7 +148,7 @@
   font-weight: 700;
 }
 
-/* ===== FORMULARIO DEL MODAL ===== */
+/* Formulario*/
 .form-row {
   display: flex;
   gap: 12px;
@@ -192,7 +192,7 @@
   box-shadow: 0 0 0 3px rgba(224, 20, 202, 0.12);
 }
 
-/* ===== ACCIONES DEL MODAL ===== */
+/* Acciones del fomulario */
 .modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -233,7 +233,7 @@
   font-size: 15px;
 }
 
-/* ===== TOAST (MENSAJE EMERGENTE) ===== */
+/*Mensajes emergentes */
 .toast {
   position: fixed;
   right: 18px;
@@ -253,4 +253,17 @@
 
 .toast.error {
   background: #d93025;
+}
+
+/* Alinenacion de numeros de telefono */
+.tabla-vistas td:nth-child(3),
+.tabla-vistas th:nth-child(3) {
+  text-align: center;
+  font-family: 'Roboto', monospace;
+  letter-spacing: 0.5px;
+}
+
+
+.tabla-vistas td:nth-child(3) {
+  white-space: nowrap;
 }

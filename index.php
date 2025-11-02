@@ -2,7 +2,6 @@
 session_start();
 include("conexion.php");
 
-// Lee y limpia mensaje de error (flash)
 $error = "";
 if (isset($_SESSION['login_error'])) {
     $error = $_SESSION['login_error'];
@@ -13,10 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $correo = isset($_POST['correo']) ? trim($_POST['correo']) : '';
     $contrasena = isset($_POST['contrasena']) ? $_POST['contrasena'] : '';
 
-    // OJO: usa md5 porque así tienes guardadas las contraseñas.
+ 
     $hash = md5($contrasena);
 
-    // Consulta preparada
     $stmt = $conexion->prepare("SELECT IdUsuario, Nombre_de_Usuario, Correo FROM Usuario WHERE Correo = ? AND Contrasena = ?");
     $stmt->bind_param("ss", $correo, $hash);
     $stmt->execute();
@@ -25,18 +23,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($res && $res->num_rows === 1) {
         $row = $res->fetch_assoc();
 
-        // Usa SIEMPRE los mismos keys que leerás en menu.php
         session_regenerate_id(true);
         $_SESSION['id']     = $row['IdUsuario'];
         $_SESSION['nombre'] = $row['Nombre_de_Usuario'];
         $_SESSION['correo'] = $row['Correo'];
 
-        // Redirige al menú (no a holamundo.php)
+    
         header("Location: menu.php");
         exit();
     } else {
         $_SESSION['login_error'] = "Correo o contraseña incorrectos.";
-        header("Location: index.php"); // PRG
+        header("Location: index.php");
         exit();
     }
 }

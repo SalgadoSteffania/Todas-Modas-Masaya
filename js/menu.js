@@ -1,9 +1,7 @@
-// Pinta contenido y marca activo en el menú principal
 function mostrarContenido(seccion){
   const cont = document.getElementById('contenido');
   cont.innerHTML = `<h2>${seccion}</h2>`;
 
-  // Activo en nivel 1
   document.querySelectorAll('.item.nivel1').forEach(li => li.classList.remove('activo'));
   const match = Array.from(document.querySelectorAll('.item.nivel1'))
     .find(li => li.textContent.trim().startsWith(seccion));
@@ -14,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Marcar Inicio al cargar
   mostrarContenido('Inicio');
 
-  // Submenús desplegables HACIA ABAJO
+  // Submenús desplegables
   document.querySelectorAll('.submenu').forEach(s => {
     const header = s.querySelector('.submenu-header');
     const list   = s.querySelector('.submenu-list');
@@ -23,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     header.addEventListener('click', (e) => {
       e.stopPropagation();
 
-      // Cierra otros submenús (opcional). Quita este bloque si quieres múltiples abiertos.
+      // Cierra otros submenús 
       document.querySelectorAll('.submenu.open').forEach(o=>{
         if(o!==s){ 
           o.classList.remove('open'); 
@@ -35,47 +33,65 @@ document.addEventListener('DOMContentLoaded', () => {
       const open = s.classList.toggle('open');
       if (toggle) toggle.src = open ? 'img/menos.svg' : 'img/mas.svg';
 
-      // Ya no hay posicionamiento lateral; al ser position:static, el contenido
-      // empuja hacia abajo dentro del mismo sidebar.
+     
     });
   });
 });
 
 function verPerfil() {
-  // Solo mostrar una pantalla de verificación
+  // Solo mostrar una pantalla de verificación, AUN EN PROCESO
   mostrarContenido('Información');
 }
 
 function cerrarSesion() {
-  // Redirige al cierre de sesión (tu archivo existe en /modulos/)
   window.location.href = 'cerrar sesion.php';
-  // Si lo renombras sin espacios: 'modulos/cerrar_sesion.php'
 }
 
+
+//----------------------------CARGA DE MODULOS 
 function cargarModuloEmpleados() {
-  // Carga el módulo dentro del <main id="contenido">
+
   fetch('modulos/empleados/index.php', { credentials: 'same-origin' })
     .then(r => r.text())
     .then(html => {
       const cont = document.getElementById('contenido');
       cont.innerHTML = html;
-      // Marcar activo “Empleado” (opcional)
+
       document.querySelectorAll('.item.nivel1').forEach(li => li.classList.remove('activo'));
-      // Carga el JS del módulo (trae eventos del modal/tabla)
       const s = document.createElement('script');
       s.src = 'js/empleados.js?v=' + Date.now();
       s.defer = true;
       document.body.appendChild(s);
       // Carga CSS del módulo si no existe
-      if (!document.querySelector('link[href^="css/empleados.css"]')) {
+      if (!document.querySelector('link[href^="css/vistas.css"]')) {
         const l = document.createElement('link');
         l.rel = 'stylesheet';
-        l.href = 'css/empleados.css?v=' + Date.now();
+        l.href = 'css/vistas.css?v=' + Date.now();
         document.head.appendChild(l);
       }
     });
 }
 
+function cargarModuloProveedores() {
+  fetch('modulos/proveedores/index.php', { credentials: 'same-origin' })
+    .then(r => r.text())
+    .then(html => {
+      const cont = document.getElementById('contenido');
+      cont.innerHTML = html;
+
+      if (!document.querySelector('link[href^="css/vistas.css"]')) {
+        const l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = 'css/vistas.css?v=' + Date.now();
+        document.head.appendChild(l);
+      }
+
+      const s = document.createElement('script');
+      s.src = 'js/proveedores.js?v=' + Date.now();
+      s.defer = true;
+      document.body.appendChild(s);
+    });
+}
 
 function cargarModuloRoles() {
   const cont = document.getElementById('contenido');
@@ -88,7 +104,6 @@ function cargarModuloRoles() {
     .then(html => {
       cont.innerHTML = html;
 
-      // Asegurar carga del script del módulo (por innerHTML los <script> no corren)
       const prev = document.getElementById('mod-roles-js');
       if (prev) prev.remove();
 
@@ -102,6 +117,7 @@ function cargarModuloRoles() {
       alert('Error cargando Roles');
     });
 }
+
 
 function cargarModuloUsuarios() {
   const cont = document.getElementById('contenido');
@@ -119,5 +135,73 @@ function cargarModuloUsuarios() {
     .catch(err => {
       console.error(err);
       alert('Error cargando Usuarios');
+    });
+}
+
+
+function cargarModuloProveedores() {
+  const cont = document.getElementById('contenido');
+
+  fetch('modulos/proveedores/index.php', { credentials: 'same-origin' })
+    .then(r => {
+      if (!r.ok) throw new Error('No se pudo cargar Proveedores');
+      return r.text();
+    })
+    .then(html => {
+      cont.innerHTML = html;
+
+
+      if (!document.querySelector('link[href*="vistas.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'css/vistas.css?v=' + Date.now();
+        document.head.appendChild(link);
+      }
+
+      const prev = document.getElementById('mod-proveedores-js');
+      if (prev) prev.remove();
+
+      const s = document.createElement('script');
+      s.id = 'mod-proveedores-js';
+      s.src = 'js/proveedores.js?v=' + Date.now();
+      s.defer = true;
+      document.body.appendChild(s);
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error cargando Proveedores');
+    });
+}
+
+function cargarModuloCategorias() {
+  const cont = document.getElementById('contenido');
+
+  fetch('modulos/categorias/index.php', { credentials: 'same-origin' })
+    .then(r => {
+      if (!r.ok) throw new Error('No se pudo cargar Categorías');
+      return r.text();
+    })
+    .then(html => {
+      cont.innerHTML = html;
+
+      if (!document.querySelector('link[href*="vistas.css"]')) {
+        const l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = 'css/vistas.css?v=' + Date.now();
+        document.head.appendChild(l);
+      }
+
+      // Inyectar el JS del módulo
+      const prev = document.getElementById('mod-categorias-js');
+      if (prev) prev.remove();
+      const s = document.createElement('script');
+      s.id = 'mod-categorias-js';
+      s.src = 'js/categorias.js?v=' + Date.now();
+      s.defer = true;
+      document.body.appendChild(s);
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error cargando Categorías');
     });
 }

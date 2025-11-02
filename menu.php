@@ -17,13 +17,13 @@ if (!isset($_SESSION['correo'])) {
 </head>
 <body>
   <!-- Barra superior -->
- <!-- Barra superior -->
-<header class="top-bar">
-  <h1>TODA MODA MASAYA</h1>
+  <header class="top-bar">
+    <h1>TODA MODA MASAYA</h1>
 
-  <!-- Íconos a la derecha -->
+    
+  <!-- Íconos de perfil y cerrarSesion -->
   <div class="top-actions">
-    <!-- Ver perfil -->
+    <!-- perfil -->
     <img
       src="img/ver_perfil.svg"  
       alt="Ver perfil"
@@ -41,8 +41,7 @@ if (!isset($_SESSION['correo'])) {
       onclick="cerrarSesion()"
     />
   </div>
-</header>
-
+  </header>
 
   <!-- Layout principal -->
   <div class="container">
@@ -71,35 +70,32 @@ if (!isset($_SESSION['correo'])) {
             </li>
 
             <!-- Empleado -->
-<!-- Donde tienes el submenú Empleado -->
-<li class="submenu nivel1">
-  <div class="submenu-header">
-    <div class="left">
-      <img src="img/empleado.svg" class="icon" alt=""><span class="label">Empleado</span>
-    </div>
-    <img src="img/mas.svg" class="toggle-icon" alt="toggle">
-  </div>
-  <ul class="submenu-list">
-    <li class="item" onclick="cargarModuloEmpleados()">Registrar empleado</li>
-    <li class="item" onclick="mostrarContenido('Planilla de pago')">Planilla de pago</li>
-    <li class="item" onclick="mostrarContenido('Planilla de pago')">Cargo</li>
-  </ul>
-</li>
-
-            <!-- Gestión de productos -->
             <li class="submenu nivel1">
               <div class="submenu-header">
                 <div class="left">
-                  <img src="img/inventario.svg" class="icon" alt=""><span class="label">Gestión de productos</span>
+                  <img src="img/empleado.svg" class="icon" alt=""><span class="label">Empleado</span>
                 </div>
                 <img src="img/mas.svg" class="toggle-icon" alt="toggle">
               </div>
               <ul class="submenu-list">
-                <li class="item" onclick="mostrarContenido('Productos')">Productos</li>
-                <li class="item" onclick="mostrarContenido('Categorías')">Categorías</li>
-                <li class="item" onclick="mostrarContenido('Ingresar proveedor')">Ingresar proveedor</li>
+                <li class="item" onclick="cargarModuloEmpleados()">Registrar empleado</li>
+                <li class="item" onclick="mostrarContenido('Planilla de pago')">Planilla de pago</li>
               </ul>
             </li>
+
+            <!-- Gestión de productos -->
+           <li class="submenu">
+  <div class="submenu-header">
+    <img src="img/inventario.svg" class="icon"> <span class="label">Gestión de productos</span>
+    <img src="img/mas.svg" class="toggle-icon">
+  </div>
+  <ul class="submenu-list">
+    <li class="item" onclick="mostrarContenido('Productos')">Productos</li>
+    <li class="item" onclick="cargarModuloCategorias()">Categorías</li>
+    <li class="item" onclick="cargarModuloProveedores()">Ingresar proveedor</li>
+
+  </ul>
+</li>
 
             <!-- Gestión de mercancia -->
             <li class="submenu nivel1">
@@ -125,7 +121,8 @@ if (!isset($_SESSION['correo'])) {
               </div>
               <ul class="submenu-list">
                 <li class="item" onclick="cargarModuloUsuarios()">Usuarios</li>
-                <li class="item" onclick="cargarModuloRoles()">Roles</li>
+                 <li class="item" onclick="cargarModuloRoles()">Roles</li>
+
               </ul>
             </li>
 
