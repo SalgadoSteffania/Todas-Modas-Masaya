@@ -65,6 +65,7 @@ if (!isset($_SESSION['correo'])) {
               <img src="img/inicio.svg" class="icon" alt=""> <span class="label">Inicio</span>
             </li>
 
+               <!-- Clientes -->
              <li class="submenu nivel1">
               <div class="submenu-header">
                 <div class="left">
@@ -74,7 +75,7 @@ if (!isset($_SESSION['correo'])) {
               </div>
               <ul class="submenu-list">
                 <li class="item" onclick="mostrarContenido('Clientes')">Registrar Cliente</li>
-                <li class="item" onclick="mostrarContenido('Departamentos')">Departamento</li>
+                <li class="item" onclick="cargarModuloDepartamentos()">Departamentos</li>
               </ul>
             </li>
 
