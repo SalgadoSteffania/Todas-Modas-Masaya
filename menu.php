@@ -90,6 +90,7 @@ if (!isset($_SESSION['correo'])) {
               <ul class="submenu-list">
                 <li class="item" onclick="cargarModuloEmpleados()">Registrar empleado</li>
                 <li class="item" onclick="mostrarContenido('Planilla de pago')">Planilla de pago</li>
+                <li class="item" onclick="cargarModuloCargos()">Cargos</li>
               </ul>
             </li>
 
