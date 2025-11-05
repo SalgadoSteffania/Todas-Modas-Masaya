@@ -101,7 +101,7 @@ if (!isset($_SESSION['correo'])) {
     <img src="img/mas.svg" class="toggle-icon">
   </div>
   <ul class="submenu-list">
-    <li class="item" onclick="mostrarContenido('Productos')">Productos</li>
+    <li class="item" onclick="cargarModuloProductos()">Productos</li>
     <li class="item" onclick="cargarModuloCategorias()">Categorías</li>
     <li class="item" onclick="cargarModuloProveedores()">Ingresar proveedor</li>
 
