@@ -1,4 +1,3 @@
-// js/clientes.js
 (() => {
   const $ = s => document.querySelector(s);
 

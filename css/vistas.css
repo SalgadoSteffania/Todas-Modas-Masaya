@@ -267,3 +267,41 @@
 .tabla-vistas td:nth-child(3) {
   white-space: nowrap;
 }
+
+/* ====== Contenedor de los filtros (categoría + búsqueda) ====== */
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;                /* Espacio entre el combo y la barra */
+  margin: 15px 0;
+}
+
+/* ====== combonox y barra de búsqueda ====== */
+.card-actions .input-select,
+.card-actions .input-buscar {
+  height: 38px;
+  padding: 6px 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+
+.card-actions .input-select {
+  width: 230px;
+  min-width: 180px;
+}
+
+.card-actions .input-buscar {
+  flex: 1;                 
+  min-width: 300px;
+}
+
+.card-actions .input-select:focus,
+.card-actions .input-buscar:focus {
+  border-color: #d63384;      
+  box-shadow: 0 0 3px rgba(214,51,132,0.4);
+}
