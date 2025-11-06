@@ -344,3 +344,37 @@ function cargarModuloProductos() {
     });
 }
 
+function cargarModuloCompras() {
+  const cont = document.getElementById('contenido');
+
+  fetch('modulos/compras/index.php', { credentials: 'same-origin' })
+    .then(r => {
+      if (!r.ok) throw new Error('No se pudo cargar Compras');
+      return r.text();
+    })
+    .then(html => {
+      cont.innerHTML = html;
+
+      // CSS reutilizado (empleados.css)
+      if (!document.querySelector('link[href*="vistas.css"]')) {
+        const l = document.createElement('link');
+        l.rel   = 'stylesheet';
+        l.href  = 'css/vistas.css?v=' + Date.now();
+        document.head.appendChild(l);
+      }
+
+      // JS del módulo
+      const prev = document.getElementById('mod-compras-js');
+      if (prev) prev.remove();
+
+      const s  = document.createElement('script');
+      s.id     = 'mod-compras-js';
+      s.src    = 'js/compras.js?v=' + Date.now();
+      s.defer  = true;
+      document.body.appendChild(s);
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error cargando Compras');
+    });
+}

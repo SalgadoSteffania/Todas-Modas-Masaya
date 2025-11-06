@@ -130,11 +130,13 @@
 }
 
 .modal-content {
-  width: min(700px, 92vw);
+  width: min(900px, 96vw);
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   padding: 16px 20px 14px;
+   max-height: 90vh;        
+  overflow-y: auto;
 }
 
 .modal-content.small {
@@ -268,12 +270,12 @@
   white-space: nowrap;
 }
 
-/* ====== Contenedor de los filtros (categoría + búsqueda) ====== */
+/* ====== Contenedor de los filtros categoría y búsqueda ====== */
 .card-actions {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 15px;                /* Espacio entre el combo y la barra */
+  gap: 15px;               
   margin: 15px 0;
 }
 
@@ -304,4 +306,82 @@
 .card-actions .input-buscar:focus {
   border-color: #d63384;      
   box-shadow: 0 0 3px rgba(214,51,132,0.4);
+}
+
+
+/* Botón "Agregar producto" en la ventana de compras */
+#btnAgregarFila {
+  margin-top: 6px;
+  width: 100%;
+  height: 38px;
+  background: #2196f3;          
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+}
+
+#btnAgregarFila:hover {
+  background: #1e88e5;          
+}
+
+
+.tabla-detalle {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.tabla-detalle th,
+.tabla-detalle td {
+  padding: 8px 10px;
+  font-size: 15px;
+  text-align: left;
+}
+
+/* Ajuste de ancho de cuadro */
+.tabla-detalle th:nth-child(1),
+.tabla-detalle td:nth-child(1) { width: 35%; }
+
+.tabla-detalle th:nth-child(2),
+.tabla-detalle td:nth-child(2) { width: 15%; text-align: center; }
+
+.tabla-detalle th:nth-child(3),
+.tabla-detalle td:nth-child(3) { width: 20%; text-align: center; }
+
+.tabla-detalle th:nth-child(4),
+.tabla-detalle td:nth-child(4) { width: 20%; text-align: right; }
+
+.tabla-detalle th:nth-child(5),
+.tabla-detalle td:nth-child(5) {
+  width: 5%;
+  text-align: center;
+}
+
+/* Botón quitar fila*/
+.btn-remove-row {
+  background: transparent;   
+  border: none;              
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-remove-row img {
+  width: 26px;
+  height: 26px;
+  display: block;
+  object-fit: contain;
+}
+
+.btn-remove-row:hover img {
+  transform: scale(1.1);
+  filter: brightness(0.9);
 }

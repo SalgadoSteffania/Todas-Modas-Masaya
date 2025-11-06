@@ -97,7 +97,9 @@ if (!isset($_SESSION['correo'])) {
             <!-- Gestión de productos -->
            <li class="submenu">
   <div class="submenu-header">
+    <div class="left">
     <img src="img/inventario.svg" class="icon"> <span class="label">Gestión de productos</span>
+    </div>
     <img src="img/mas.svg" class="toggle-icon">
   </div>
   <ul class="submenu-list">
@@ -117,7 +119,7 @@ if (!isset($_SESSION['correo'])) {
                 <img src="img/mas.svg" class="toggle-icon" alt="toggle">
               </div>
               <ul class="submenu-list">
-                <li class="item" onclick="mostrarContenido('Compras')">Compras</li>
+                <li class="item" onclick="cargarModuloCompras()">Compras</li>
                 <li class="item" onclick="mostrarContenido('Salida de inventario')">Salida de inventario</li>
               </ul>
             </li>
