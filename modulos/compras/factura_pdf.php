@@ -6,7 +6,7 @@ if (!isset($_SESSION['correo'])) {
 }
 
 require_once dirname(__DIR__, 2) . '/conexion.php';
-require_once dirname(__DIR__, 2) . '/tcpdf/tcpdf.php'; 
+require_once dirname(__DIR__, 2) . '/tcpdf/tcpdf.php';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -19,12 +19,12 @@ $sqlCab = "SELECT
               c.IdCompra,
               c.Fecha,
               u.Nombre_de_Usuario AS Comprador,
-              p.Nombre AS Proveedor,
+              p.Nombre   AS Proveedor,
               p.Telefono,
               p.Email,
               p.Direccion
             FROM Compra c
-            JOIN Usuario   u ON u.IdUsuario = c.IdUsuario
+            JOIN Usuario   u ON u.IdUsuario   = c.IdUsuario
             JOIN Proveedor p ON p.IdProveedor = c.IdProveedor
             WHERE c.IdCompra = ?";
 
@@ -39,24 +39,28 @@ if (!$cab) {
 
 $sqlDet = "SELECT 
               pr.Nombre AS Producto,
+              pr.Marca,
+              pr.Talla,
               d.Cantidad,
               d.PrecioUnitario,
               d.Subtotal
             FROM Detalle_Compra d
             JOIN Producto pr ON pr.IdProducto = d.IdProducto
             WHERE d.IdCompra = ?";
+
 $stmt2 = $conexion->prepare($sqlDet);
 $stmt2->bind_param("i", $IdCompra);
 $stmt2->execute();
-$det = $stmt2->get_result();
+$resDet = $stmt2->get_result();
 
+$items = [];
 $total = 0;
-while ($row = $det->fetch_assoc()) {
-    $total += $row['Subtotal'];
-    $items[] = $row;
+while ($row = $resDet->fetch_assoc()) {
+    $total   += (float)$row['Subtotal'];
+    $items[]  = $row;
 }
 
-
+/* ===== CREACIÓN DEL PDF ===== */
 $pdf = new TCPDF();
 $pdf->SetCreator('Toda Moda Masaya');
 $pdf->SetAuthor('Sistema Web');
@@ -64,6 +68,7 @@ $pdf->SetTitle('Factura de Compra #' . $IdCompra);
 $pdf->SetMargins(20, 25, 20);
 $pdf->AddPage();
 
+/* ===== CONTENIDO HTML ===== */
 $html = '
 <h2 style="text-align:center; color:#e014ca;">Factura de Compra</h2>
 <hr>
@@ -83,21 +88,27 @@ $html = '
   <thead>
     <tr style="background-color:#fce4ec;">
       <th><b>Producto</b></th>
+      <th><b>Marca</b></th>
+      <th><b>Talla</b></th>
       <th><b>Cantidad</b></th>
       <th><b>Precio Unitario (C$)</b></th>
       <th><b>Subtotal (C$)</b></th>
     </tr>
   </thead>
   <tbody>';
+
 foreach ($items as $it) {
     $html .= '
     <tr>
       <td>' . htmlspecialchars($it['Producto']) . '</td>
+      <td>' . htmlspecialchars($it['Marca']) . '</td>
+      <td>' . htmlspecialchars($it['Talla']) . '</td>
       <td align="center">' . $it['Cantidad'] . '</td>
       <td align="right">' . number_format($it['PrecioUnitario'], 2) . '</td>
       <td align="right">' . number_format($it['Subtotal'], 2) . '</td>
     </tr>';
 }
+
 $html .= '
   </tbody>
 </table>

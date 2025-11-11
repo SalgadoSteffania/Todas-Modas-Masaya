@@ -4,7 +4,7 @@ if (!isset($_SESSION['correo'])) { http_response_code(401); exit('No autorizado'
 
 require_once dirname(__DIR__, 2) . '/conexion.php';
 
-
+/* Proveedores para el cbx */
 $proveedores = [];
 $sqlProv = "SELECT IdProveedor, Nombre FROM Proveedor ORDER BY Nombre";
 $resProv = $conexion->query($sqlProv);
@@ -14,8 +14,9 @@ if ($resProv) {
   }
 }
 
+/* Productos para el cbx */
 $productos = [];
-$sqlProd = "SELECT IdProducto, Nombre FROM Producto ORDER BY Nombre";
+$sqlProd = "SELECT IdProducto, Nombre, Talla, Marca FROM Producto ORDER BY Nombre";
 $resProd = $conexion->query($sqlProd);
 if ($resProd) {
   while ($row = $resProd->fetch_assoc()) {
@@ -32,9 +33,20 @@ if ($resProd) {
     </div>
 
     <div class="card-actions">
-      <input type="text" id="buscarCompra" class="input-buscar"
-             placeholder="Buscar por comprador o proveedor">
+      <!-- Filtro por rango de fechas -->
+      <input type="date" id="fechaDesde" class="input-date" placeholder="Desde">
+      <span class="rango-separador">a</span>
+      <input type="date" id="fechaHasta" class="input-date" placeholder="Hasta">
+
+     
+      <input
+        type="text"
+        id="buscarCompra"
+        class="input-buscar"
+        placeholder="Buscar por comprador o proveedor"
+      >
     </div>
+
 
     <table class="tabla-vistas" id="tablaCompras">
       <thead>
@@ -53,7 +65,7 @@ if ($resProd) {
   </div>
 </div>
 
-
+<!-- Modal Crear / Editar Compra -->
 <div class="modal" id="modalCompra" aria-hidden="true">
   <div class="modal-content large">
     <div class="modal-header">
@@ -82,7 +94,10 @@ if ($resProd) {
       <div class="form-row">
         <div class="icon-slot"></div>
         <div class="form-field">
-          <label for="FechaCompra">Fecha de compra</label>
+          <div class="card-actions" class="input-date" >
+          <label for="FechaCompra">Fecha de compra  </label>
+          
+          </div>
           <input type="date" name="Fecha" id="FechaCompra" value="<?= date('Y-m-d'); ?>">
         </div>
       </div>
@@ -95,6 +110,8 @@ if ($resProd) {
             <thead>
               <tr>
                 <th style="width:220px;">Producto</th>
+                <th style="width:150px;">Marca</th>
+                <th style="width:110px;">Talla</th>
                 <th style="width:100px;">Cantidad</th>
                 <th style="width:140px;">Precio Unitario</th>
                 <th style="width:140px;">Subtotal</th>
@@ -126,25 +143,50 @@ if ($resProd) {
   </div>
 </div>
 
+
 <template id="filaDetalleTemplate">
   <tr>
+    <!-- Producto -->
     <td>
       <select name="IdProducto[]" class="sel-producto" required>
         <option value="">Seleccione producto</option>
         <?php foreach ($productos as $pr): ?>
-          <option value="<?= htmlspecialchars($pr['IdProducto']) ?>">
-            <?= htmlspecialchars($pr['Nombre']) ?>
-          </option>
-        <?php endforeach; ?>
+        <option
+        value="<?= htmlspecialchars($pr['IdProducto']) ?>"
+        data-talla="<?= htmlspecialchars($pr['Talla']) ?>"
+        data-marca="<?= htmlspecialchars($pr['Marca']) ?>"
+        >
+    <?= htmlspecialchars($pr['Nombre'] . ' - ' . $pr['Marca']) ?>
+  </option>
+<?php endforeach; ?>
+
       </select>
     </td>
+
+    <!-- Marca -->
+    <td>
+      <input type="text" class="inp-marca" readonly>
+    </td>
+
+    <!-- Talla-->
+    <td>
+      <input type="text" class="inp-talla" readonly>
+    </td>
+
+    <!-- Cantidad -->
     <td>
       <input type="number" name="Cantidad[]" class="inp-cantidad" min="1" value="1" required>
     </td>
+
+    <!-- Precio unitario -->
     <td>
       <input type="number" name="PrecioUnitario[]" class="inp-precio" step="0.01" min="0" value="0" required>
     </td>
+
+    <!-- Subtotal -->
     <td class="celda-subtotal">C$ 0.00</td>
+
+    <!-- Quitar fila -->
     <td style="text-align:center;">
       <button type="button" class="btn-remove-row" title="Quitar fila">
         <img src="img/borrar.png" alt="Quitar">
@@ -153,7 +195,7 @@ if ($resProd) {
   </tr>
 </template>
 
-<!-- Ver factura -->
+<!-- Modal Ver factura -->
 <div class="modal" id="modalFactura" aria-hidden="true">
   <div class="modal-content large">
     <div class="modal-header">
@@ -167,17 +209,20 @@ if ($resProd) {
       <p><strong>Fecha:</strong> <span id="factFecha"></span></p>
     </div>
 
-    <table class="tabla-empleados" id="tablaFactura">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Precio Unitario</th>
-          <th>Subtotal</th>
-        </tr>
-      </thead>
-      <tbody id="factDetalleBody"></tbody>
-    </table>
+    <table class="tabla-vistas" id="tablaFactura">
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Marca</th>
+      <th>Talla</th>
+      <th>Cantidad</th>
+      <th>Precio Unitario</th>
+      <th>Subtotal</th>
+    </tr>
+  </thead>
+  <tbody id="factDetalleBody"></tbody>
+</table>
+
 
     <div class="factura-total">
       <p><strong>Total:</strong> <span id="factTotal"></span></p>
@@ -192,5 +237,5 @@ if ($resProd) {
   </div>
 </div>
 
-<!-- Toast -->
+
 <div id="toast" class="toast" style="display:none;"></div>

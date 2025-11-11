@@ -260,7 +260,7 @@
 /* Alinenacion de numeros de telefono */
 .tabla-vistas td:nth-child(3),
 .tabla-vistas th:nth-child(3) {
-  text-align: center;
+  text-align: left;
   font-family: 'Roboto', monospace;
   letter-spacing: 0.5px;
 }
@@ -342,24 +342,27 @@
   text-align: left;
 }
 
-/* Ajuste de ancho de cuadro */
+/* Ajuste de ancho de bloques de texto */
 .tabla-detalle th:nth-child(1),
 .tabla-detalle td:nth-child(1) { width: 35%; }
 
 .tabla-detalle th:nth-child(2),
-.tabla-detalle td:nth-child(2) { width: 15%; text-align: center; }
+.tabla-detalle td:nth-child(2) { width: 15%; text-align: left; }
 
 .tabla-detalle th:nth-child(3),
-.tabla-detalle td:nth-child(3) { width: 20%; text-align: center; }
+.tabla-detalle td:nth-child(3) { width: 20%; text-align: left; }
 
 .tabla-detalle th:nth-child(4),
-.tabla-detalle td:nth-child(4) { width: 20%; text-align: right; }
+.tabla-detalle td:nth-child(4) { width: 20%; text-align: left; }
 
 .tabla-detalle th:nth-child(5),
-.tabla-detalle td:nth-child(5) {
-  width: 5%;
-  text-align: center;
-}
+.tabla-detalle td:nth-child(5) {width: 5%; text-align: left;}
+
+.tabla-detalle th:nth-child(6),
+.tabla-detalle td:nth-child(6) { width: 5%; text-align: left; } 
+
+.tabla-detalle th:nth-child(7),
+.tabla-detalle td:nth-child(7) { width: 10%; text-align: left; }
 
 /* Botón quitar fila*/
 .btn-remove-row {
@@ -384,4 +387,51 @@
 .btn-remove-row:hover img {
   transform: scale(1.1);
   filter: brightness(0.9);
+}
+
+/* Filtro de fecha */
+.card-actions .input-date {
+  height: 38px;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-actions .input-date:focus {
+  border-color: #e014ca;
+  box-shadow: 0 0 4px rgba(224, 20, 202, 0.3);
+  outline: none;
+}
+
+.card-actions .rango-separador {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  color: #555;
+  margin: 0 5px;
+  font-weight: 500;
+}
+
+
+/* Ajustes de la tabla compra*/
+
+#modalCompra .modal-content.large {
+  width: min(1100px, 98vw); 
+  max-height: 90vh;          
+  overflow-y: auto;          
+}
+
+#modalCompra .tabla-detalle {
+  width: 100%;
+  table-layout: fixed;
+}
+
+#modalCompra .tabla-detalle select,
+#modalCompra .tabla-detalle input {
+  width: 100%;
+  box-sizing: border-box;
 }

@@ -23,18 +23,20 @@ try {
                 c.Fecha,
                 c.IdProveedor,
                 u.Nombre_de_Usuario      AS Comprador,
-                p.Nombre      AS Proveedor,
+                p.Nombre                 AS Proveedor,
                 d.IdDetCompra,
                 d.IdProducto,
-                pr.Nombre     AS Producto,
+                pr.Nombre                AS Producto,
+                pr.Marca,
+                pr.Talla,
                 d.Cantidad,
                 d.PrecioUnitario,
                 d.Subtotal
             FROM Compra c
-            JOIN Usuario       u  ON u.IdUsuario   = c.IdUsuario
-            JOIN Proveedor     p  ON p.IdProveedor = c.IdProveedor
-            JOIN Detalle_Compra d ON d.IdCompra    = c.IdCompra
-            JOIN Producto      pr ON pr.IdProducto = d.IdProducto
+            JOIN Usuario        u  ON u.IdUsuario   = c.IdUsuario
+            JOIN Proveedor      p  ON p.IdProveedor = c.IdProveedor
+            JOIN Detalle_Compra d  ON d.IdCompra    = c.IdCompra
+            JOIN Producto       pr ON pr.IdProducto = d.IdProducto
             WHERE c.IdCompra = ?
             ORDER BY d.IdDetCompra ASC";
 
@@ -50,11 +52,11 @@ try {
     while ($row = $res->fetch_assoc()) {
         if ($cabecera === null) {
             $cabecera = [
-                'IdCompra'   => $row['IdCompra'],
-                'Fecha'      => $row['Fecha'],
-                'IdProveedor'=> $row['IdProveedor'],
-                'Comprador'  => $row['Comprador'],
-                'Proveedor'  => $row['Proveedor'],
+                'IdCompra'    => $row['IdCompra'],
+                'Fecha'       => $row['Fecha'],
+                'IdProveedor' => $row['IdProveedor'],
+                'Comprador'   => $row['Comprador'],
+                'Proveedor'   => $row['Proveedor'],
             ];
         }
 
@@ -62,6 +64,8 @@ try {
             'IdDetCompra'    => $row['IdDetCompra'],
             'IdProducto'     => $row['IdProducto'],
             'Producto'       => $row['Producto'],
+            'Marca'          => $row['Marca'],           
+            'Talla'          => $row['Talla'],
             'Cantidad'       => $row['Cantidad'],
             'PrecioUnitario' => $row['PrecioUnitario'],
             'Subtotal'       => $row['Subtotal'],

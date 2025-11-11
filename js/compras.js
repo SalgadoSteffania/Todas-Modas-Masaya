@@ -1,9 +1,11 @@
 (() => {
   const $ = s => document.querySelector(s);
 
-  const tablaBody   = $('#tablaCompras tbody');
-  const inputBuscar = $('#buscarCompra');
-  const toast       = $('#toast');
+  const tablaBody     = $('#tablaCompras tbody');
+  const inputBuscar   = $('#buscarCompra');
+  const inputDesde    = $('#fechaDesde');
+  const inputHasta    = $('#fechaHasta');
+  const toast         = $('#toast');
 
   const modalCompra   = $('#modalCompra');
   const tituloCompra  = $('#modalTituloCompra');
@@ -36,7 +38,6 @@
     setTimeout(() => { toast.style.display = 'none'; }, 2200);
   }
 
-
   async function cargarCompras() {
     if (!tablaBody) return;
     tablaBody.innerHTML = `<tr><td colspan="7">Cargando...</td></tr>`;
@@ -66,13 +67,21 @@
 
   function renderCompras() {
     if (!tablaBody) return;
-    const q = (inputBuscar?.value || '').toLowerCase();
+
+    const q       = (inputBuscar?.value || '').toLowerCase();
+    const desde   = inputDesde?.value || '';  
+    const hasta   = inputHasta?.value || '';
+
     tablaBody.innerHTML = '';
     let count = 0;
 
     for (const c of compras) {
       const texto = `${c.Comprador || ''} ${c.Proveedor || ''}`.toLowerCase();
       if (q && !texto.includes(q)) continue;
+
+      const f = (c.Fecha || '').slice(0, 10);
+      if (desde && f < desde) continue;
+      if (hasta && f > hasta) continue;
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -114,7 +123,7 @@
     }
   }
 
-
+  // ====== Modal Nuevop y Editar compra ======
   function abrirNuevaCompra() {
     modo = 'crear';
     tituloCompra.textContent = 'Nueva compra';
@@ -139,17 +148,34 @@
     if (!plantillaFila || !tbodyDetalle) return;
 
     const clone = plantillaFila.content.cloneNode(true);
-    const tr = clone.querySelector('tr');
-    const selProd = tr.querySelector('.sel-producto');
-    const inpCant = tr.querySelector('.inp-cantidad');
-    const inpPrec = tr.querySelector('.inp-precio');
-    const btnRem  = tr.querySelector('.btn-remove-row');
+    const tr    = clone.querySelector('tr');
 
+    const selProd  = tr.querySelector('.sel-producto');
+    const inpMarca = tr.querySelector('.inp-marca');  
+    const inpTalla = tr.querySelector('.inp-talla');
+    const inpCant  = tr.querySelector('.inp-cantidad');
+    const inpPrec  = tr.querySelector('.inp-precio');
+    const btnRem   = tr.querySelector('.btn-remove-row');
+
+   
     if (det) {
-      selProd.value = det.IdProducto;
-      inpCant.value = det.Cantidad;
-      inpPrec.value = det.PrecioUnitario;
+      selProd.value   = det.IdProducto;
+      inpCant.value   = det.Cantidad;
+      inpPrec.value   = det.PrecioUnitario;
+      if (inpTalla) inpTalla.value = det.Talla || '';
+      if (inpMarca) inpMarca.value = det.Marca || '';
     }
+
+    selProd.addEventListener('change', () => {
+      const selected = selProd.selectedOptions[0];
+      if (!selected) return;
+
+      const talla = selected.dataset.talla || '';
+      const marca = selected.dataset.marca || '';  
+
+      if (inpTalla) inpTalla.value = talla;
+      if (inpMarca) inpMarca.value = marca;         
+    });
 
     function onChange() {
       recalcularFila(tr);
@@ -162,6 +188,8 @@
       tr.remove();
       recalcularTotales();
     });
+
+    selProd.dispatchEvent(new Event('change'));
 
     tbodyDetalle.appendChild(tr);
     recalcularFila(tr);
@@ -263,63 +291,61 @@
   }
 
   function eliminarCompra(IdCompra) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.setAttribute('aria-hidden', 'false');
 
-  const modal = document.createElement('div');
-  modal.className = 'modal';
-  modal.setAttribute('aria-hidden', 'false');
-
-  modal.innerHTML = `
-    <div class="modal-content small">
-      <div class="modal-header">
-        <h3>Confirmar eliminación</h3>
+    modal.innerHTML = `
+      <div class="modal-content small">
+        <div class="modal-header">
+          <h3>Confirmar eliminación</h3>
+        </div>
+        <p>¿Está seguro de eliminar la compra?</p>
+        <div class="modal-actions">
+          <button class="btn-cancelar">No</button>
+          <button class="btn-eliminar">Sí, eliminar</button>
+        </div>
       </div>
-      <p>¿Está seguro de eliminar la compra?</p>
-      <div class="modal-actions">
-        <button class="btn-cancelar">No</button>
-        <button class="btn-eliminar">Sí, eliminar</button>
-      </div>
-    </div>
-  `;
+    `;
 
-  document.body.appendChild(modal);
+    document.body.appendChild(modal);
 
-  const btnCancelar = modal.querySelector('.btn-cancelar');
-  const btnEliminar = modal.querySelector('.btn-eliminar');
+    const btnCancelar = modal.querySelector('.btn-cancelar');
+    const btnEliminar = modal.querySelector('.btn-eliminar');
 
-  btnCancelar.addEventListener('click', () => {
-    modal.remove();
-  });
-
-
-  btnEliminar.addEventListener('click', async () => {
-    try {
-      const body = new URLSearchParams();
-      body.append('IdCompra', IdCompra);
-
-      const r   = await fetch('modulos/compras/eliminar.php', {
-        method: 'POST',
-        body,
-        credentials: 'same-origin'
-      });
-      const res = await r.json();
-
+    btnCancelar.addEventListener('click', () => {
       modal.remove();
+    });
 
-      if (res.ok) {
-        await cargarCompras();
-        showToast('Compra eliminada con éxito', 'success');
-      } else {
-        showToast(res.msg || 'No se pudo eliminar la compra', 'error');
+    btnEliminar.addEventListener('click', async () => {
+      try {
+        const body = new URLSearchParams();
+        body.append('IdCompra', IdCompra);
+
+        const r   = await fetch('modulos/compras/eliminar.php', {
+          method: 'POST',
+          body,
+          credentials: 'same-origin'
+        });
+        const res = await r.json();
+
+        modal.remove();
+
+        if (res.ok) {
+          await cargarCompras();
+          showToast('Compra eliminada con éxito', 'success');
+        } else {
+          showToast(res.msg || 'No se pudo eliminar la compra', 'error');
+        }
+      } catch (e) {
+        console.error(e);
+        modal.remove();
+        showToast('Error de red', 'error');
       }
-    } catch (e) {
-      console.error(e);
-      modal.remove();
-      showToast('Error de red', 'error');
-    }
-  });
-}
+    });
+  }
 
-
+  // ====== Ver factura ======
   async function verFactura(IdCompra) {
     try {
       const r   = await fetch(
@@ -344,6 +370,8 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${d.Producto || ''}</td>
+          <td>${d.Marca || ''}</td>
+          <td>${d.Talla || ''}</td>
           <td>${d.Cantidad || 0}</td>
           <td>C$ ${Number(d.PrecioUnitario).toFixed(2)}</td>
           <td>C$ ${Number(d.Subtotal).toFixed(2)}</td>
@@ -370,14 +398,16 @@
     modalFactura.setAttribute('aria-hidden', 'true');
   }
 
-  
+
   btnNueva      && btnNueva.addEventListener('click', abrirNuevaCompra);
   btnCancelar   && btnCancelar.addEventListener('click', cerrarModalCompra);
   btnAgregarFila&& btnAgregarFila.addEventListener('click', () => agregarFilaDetalle());
   formCompra    && formCompra.addEventListener('submit', guardarCompra);
   inputBuscar   && inputBuscar.addEventListener('input', renderCompras);
+  inputDesde    && inputDesde.addEventListener('change', renderCompras);
+  inputHasta    && inputHasta.addEventListener('change', renderCompras);
   btnCerrarFact && btnCerrarFact.addEventListener('click', cerrarModalFactura);
 
-
+ 
   cargarCompras();
 })();
