@@ -412,3 +412,72 @@ window.cargarModuloSalidas = function () {
         alert('Error cargando Salidas de inventario');
       });
   };
+
+
+
+  window.cargarModuloNomina = function () {
+    const cont = document.getElementById('contenido');
+
+    fetch('modulos/nomina/index.php', { credentials: 'same-origin' })
+      .then(r => {
+        if (!r.ok) throw new Error('No se pudo cargar Salidas');
+        return r.text();
+      })
+      .then(html => {
+        cont.innerHTML = html;
+
+      
+        if (!document.querySelector('link[href*="vistas.css"]')) {
+          const l = document.createElement('link');
+          l.rel   = 'stylesheet';
+          l.href  = 'css/vistas.css?v=' + Date.now();
+          document.head.appendChild(l);
+        }
+
+
+        const prev = document.getElementById('mod-nomina-js');
+        if (prev) prev.remove();
+
+        const s  = document.createElement('script');
+        s.id     = 'mod-nomina-js';
+        s.src    = 'js/nomina.js?v=' + Date.now(); 
+        s.defer  = true;
+        document.body.appendChild(s);
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Error cargando nominas');
+      });
+  };
+
+window.cargarModuloInicio = function () {
+  const cont = document.getElementById('contenido');
+  if (!cont) return;
+
+  fetch('modulos/inicio/index.php', { credentials: 'same-origin' })
+    .then(r => {
+      if (!r.ok) throw new Error('No se pudo cargar Inicio');
+      return r.text();
+    })
+    .then(html => {
+      cont.innerHTML = html;
+
+      if (!document.querySelector('link[href*="inicio.css"]')) {
+        const l = document.createElement('link');
+        l.rel  = 'stylesheet';
+        l.href = 'css/inicio.css?v=' + Date.now();
+        document.head.appendChild(l);
+      }
+
+    })
+    .catch(err => {
+      console.error(err);
+      cont.innerHTML = '<p>Error cargando Inicio</p>';
+    });
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof window.cargarModuloInicio === 'function') {
+    window.cargarModuloInicio();
+  }
+});

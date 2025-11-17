@@ -1,0 +1,83 @@
+.inicio-container {
+  padding: 24px 32px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.panel-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* Tarjetas */
+
+.kpi-card {
+  display: flex;
+  align-items: center;
+  padding: 18px 22px;
+  border-radius: 14px;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+/* Espacio para icono */
+.kpi-icon-space {
+  width: 64px;
+  height: 64px;
+  margin-right: 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.18);
+}
+
+/* Texto */
+
+.kpi-info {
+  flex: 1;
+}
+
+.kpi-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.kpi-value {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Colores */
+
+.kpi-azul {
+  background: #1665d8;
+}
+
+.kpi-naranja {
+  background: #ff9800;
+}
+
+.kpi-morado {
+  background: #9c27b0;
+}
+
+.kpi-turquesa {
+  background: #00bcd4;
+}
+
+.kpi-verde {
+  background: #4caf50;
+}

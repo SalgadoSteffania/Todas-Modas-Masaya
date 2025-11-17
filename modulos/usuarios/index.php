@@ -17,7 +17,7 @@ require_once dirname(__DIR__, 2) . '/conexion.php';
       <input type="text" id="buscarUsuario" class="input-buscar" placeholder="Buscar por cédula, usuario, correo o rol">
     </div>
 
-    <table class="tabla-empleados" id="tablaUsuarios">
+    <table class="tabla-vistas" id="tablaUsuarios">
       <thead>
         <tr>
           <th style="width:90px;">ID</th>

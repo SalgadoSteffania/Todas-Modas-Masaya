@@ -13,7 +13,8 @@ if (!isset($_SESSION['correo'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/menu.css" />
-  <script defer src="js/menu.js"></script>
+   <link rel="stylesheet" href="css/inicio.css?v=<?php echo time(); ?>" />
+<script defer src="js/menu.js?v=<?php echo time(); ?>"></script>
 </head>
 <body>
   <!-- Barra superior -->
@@ -61,7 +62,7 @@ if (!isset($_SESSION['correo'])) {
         <nav class="menu">
           <ul>
 
-            <li class="item nivel1 activo" onclick="mostrarContenido('Inicio')">
+           <li class="item nivel1 activo" onclick="cargarModuloInicio()">
               <img src="img/inicio.svg" class="icon" alt=""> <span class="label">Inicio</span>
             </li>
 
@@ -89,7 +90,7 @@ if (!isset($_SESSION['correo'])) {
               </div>
               <ul class="submenu-list">
                 <li class="item" onclick="cargarModuloEmpleados()">Registrar empleado</li>
-                <li class="item" onclick="mostrarContenido('Planilla de pago')">Planilla de pago</li>
+                <li class="item" onclick="cargarModuloNomina()">Planilla de pago</li>
                 <li class="item" onclick="cargarModuloCargos()">Cargos</li>
               </ul>
             </li>
@@ -150,7 +151,7 @@ if (!isset($_SESSION['correo'])) {
 
     <!-- Contenido -->
     <main id="contenido">
-      <h2>Inicio</h2>
+   <script>cargarModuloInicio()</script>
     </main>
   </div>
 </body>
