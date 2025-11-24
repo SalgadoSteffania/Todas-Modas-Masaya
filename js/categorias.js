@@ -122,7 +122,7 @@
       else{ toastMsg(res.msg || 'No se pudo eliminar', 'error'); }
     }catch(e){
       console.error(e);
-      toastMsg('Error de red', 'error');
+      toastMsg('Uno o mas  productos tienen esta categoria', 'error');
     }
   }
 

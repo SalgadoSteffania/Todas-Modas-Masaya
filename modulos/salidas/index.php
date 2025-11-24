@@ -142,7 +142,7 @@ if ($r2) while ($row = $r2->fetch_assoc()) $productos[] = $row;
             data-precio="<?= htmlspecialchars($p['Precio_de_Venta']) ?>"
             data-stock="<?= htmlspecialchars($p['Cantidad']) ?>"
           >
-            <?= htmlspecialchars($p['Nombre']) ?>
+            <?= htmlspecialchars($p['Nombre'] ) ?>
           </option>
         <?php endforeach; ?>
       </select>

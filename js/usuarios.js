@@ -184,7 +184,7 @@
       }
     }catch(err){
       console.error(err);
-      toastMsg('Error de red', 'error');
+      toastMsg('Este usuario ha realizado operaciones de compra o salida de inventario', 'error');
     }
   }
 
@@ -196,10 +196,28 @@
     });
   }
 
-  // Eye toggle
-  btnEye?.addEventListener('click', () => {
-    passInp.type = passInp.type === 'password' ? 'text' : 'password';
+const correoInput = document.getElementById("Correo");
+
+correoInput.addEventListener("input", function () {
+    let v = correoInput.value;
+    if (v.endsWith("@gmail.com")) return;
+    v = v.replace(/@.*/, "");
+    correoInput.value = v + "@gmail.com";
+});
+
+
+const togglePass = document.getElementById('togglePass');
+const passInput    = document.getElementById('Contrasena');
+
+if (togglePass && passInp) {
+  togglePass.addEventListener('click', () => {
+    const isPass = passInput.type === 'password';
+    passInput.type = isPass ? 'text' : 'password';
+    togglePass.setAttribute('name', isPass ? 'eye-off-outline' : 'eye-outline');
   });
+}
+
+
 
   // Eventos
   btnNuevo?.addEventListener('click', abrirCrear);

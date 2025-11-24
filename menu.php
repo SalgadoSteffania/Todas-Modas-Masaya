@@ -16,6 +16,8 @@ if (!isset($_SESSION['correo'])) {
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/menu.css" />
   <link rel="stylesheet" href="css/inicio.css?v=<?php echo time(); ?>" />
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <script defer src="js/menu.js?v=<?php echo time(); ?>"></script>
 </head>
 

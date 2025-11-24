@@ -62,21 +62,26 @@ require_once dirname(__DIR__, 2) . '/conexion.php';
       <div class="form-row">
         <div class="icon-slot"></div>
         <div class="form-field">
-          <label for="Correo">Correo (opcional)</label>
+          <label for="Correo">Correo</label>
           <input type="email" id="Correo" name="Correo" maxlength="100">
         </div>
       </div>
 
-      <div class="form-row">
-        <div class="icon-slot"></div>
-        <div class="form-field">
-          <label for="Contrasena">Contraseña <small id="helpPass" style="color:#777;"></small></label>
-          <div style="position:relative;">
-            <input type="password" id="Contrasena" name="Contrasena" maxlength="255" style="padding-right:36px;">
-            <button type="button" id="togglePass" style="position:absolute;right:6px;top:6px;background:transparent;border:0;cursor:pointer;">👁️</button>
-          </div>
-        </div>
-      </div>
+   <div class="form-row">
+  <div class="icon-slot"></div>
+  <div class="form-field">
+    <label for="Contrasena">Contraseña <small id="helpPass"></small></label>
+
+    <div class="input-group" style="position:relative;">
+      <input type="password" id="Contrasena" name="Contrasena"
+             maxlength="255" placeholder="Contraseña"
+             required style="padding-right:40px;">
+
+      <ion-icon name="eye-outline" id="togglePass" class="eye-icon"></ion-icon>
+    </div>
+  </div>
+</div>
+
 
       <div class="form-row">
         <div class="icon-slot"></div>

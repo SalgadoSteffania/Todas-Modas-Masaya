@@ -175,6 +175,21 @@
     });
   }
 
+  const cedulaInput = document.getElementById("Cedula");
+
+cedulaInput.addEventListener("input", function () {
+    let v = cedulaInput.value;
+    v = v.replace(/[^0-9A-Za-z]/g, "");
+    if (v.length > 3) {
+        v = v.slice(0, 3) + "-" + v.slice(3);
+    }
+    if (v.length > 10) {
+        v = v.slice(0, 10) + "-" + v.slice(10);
+    }
+    cedulaInput.value = v;
+});
+
+
   //EVENTOS
   btnNuevo   && btnNuevo.addEventListener('click', abrirModalCrear);
   btnCancelar&& btnCancelar.addEventListener('click', cerrarModal);

@@ -180,7 +180,7 @@ if ($resProd) {
 
     <!-- Precio unitario -->
     <td>
-      <input type="number" name="PrecioUnitario[]" class="inp-precio" step="0.01" min="0" value="0" required>
+      <input type="number" name="PrecioUnitario[]" class="inp-precio" step="0.01" min="1" value="0.00" required>
     </td>
 
     <!-- Subtotal -->

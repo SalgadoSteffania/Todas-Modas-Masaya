@@ -575,3 +575,25 @@
     align-items: center;
     gap: 8px;
 }
+
+.eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    color: #d63384;
+}
+
+.eye-icon:hover {
+    color: #b2226b;
+}
+
+.input-group {
+    position: relative;
+}
+
+
+
+

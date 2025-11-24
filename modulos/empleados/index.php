@@ -76,7 +76,7 @@ while ($row = $q->fetch_assoc()) $cargos[] = $row;
         <div class="icon-slot"><!-- ícono futuro --></div>
         <div class="form-field">
           <label for="Direccion">Dirección</label>
-          <input type="text" name="Direccion" id="Direccion">
+          <input type="text" name="Direccion" id="Direccion" required>
         </div>
       </div>
 
@@ -84,7 +84,8 @@ while ($row = $q->fetch_assoc()) $cargos[] = $row;
         <div class="icon-slot"><!-- ícono futuro --></div>
         <div class="form-field">
           <label for="Telefono">Teléfono</label>
-          <input type="text" name="Telefono" id="Telefono">
+          <input type="text" name="Telefono" id="Telefono" maxlength="8"
+       oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
         </div>
       </div>
 

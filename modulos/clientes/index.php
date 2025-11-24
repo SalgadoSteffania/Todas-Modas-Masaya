@@ -99,7 +99,8 @@ if ($resDep) {
         <div  class="icon-slot" > <img src="img/telefono.svg" alt=""> </div>
         <div class="form-field">
           <label for="Telefono">Teléfono</label>
-          <input type="text" name="Telefono" id="Telefono">
+          <input type="text" name="Telefono" id="Telefono" maxlength="8"
+       oninput="this.value = this.value.replace(/[^0-9]/g, '');">
         </div>
       </div>
 

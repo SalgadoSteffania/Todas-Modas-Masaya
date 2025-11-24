@@ -170,7 +170,7 @@
       }
     }catch(err){
       console.error(err);
-      showToast('Error de red', 'error');
+      showToast('Se ha hecho una o mas compras con este proveedor', 'error');
     }
   }
 
@@ -178,12 +178,23 @@
   function aplicarFiltro(q){
     q = (q || '').toLowerCase();
     document.querySelectorAll('#tablaProveedores tbody tr').forEach(tr => {
-      // columnas: 1 Nombre, 2 Teléfono, 3 Email
       const celdas = [1,2,3].map(i => (tr.children[i]?.textContent || '').toLowerCase());
       const hit = celdas.some(txt => txt.includes(q));
       tr.style.display = hit ? '' : 'none';
     });
   }
+
+  const emailInput = document.getElementById("Email");
+
+emailInput.addEventListener("input", function () {
+    let v = emailInput.value;
+
+    if (v.endsWith("@gmail.com")) return;
+    v = v.replace(/@.*/, "");
+    emailInput.value = v + "@gmail.com";
+});
+
+
 
   // EVENTOS
   btnNuevo   && btnNuevo.addEventListener('click', abrirModalCrear);

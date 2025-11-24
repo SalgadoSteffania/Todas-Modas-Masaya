@@ -136,7 +136,7 @@
       }
     } catch (e) {
       console.error(e);
-      toastMsg('Hay un empleado con este cargo', 'error');
+      toastMsg('Hay uno o mas empleados con este cargo', 'error');
     }
   }
 

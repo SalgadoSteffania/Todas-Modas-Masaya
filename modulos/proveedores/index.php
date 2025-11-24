@@ -56,7 +56,8 @@ if (!isset($_SESSION['correo'])) { http_response_code(401); exit('No autorizado'
         <div class="icon-slot"></div>
         <div class="form-field">
           <label for="Telefono">Teléfono</label>
-          <input type="text" name="Telefono" id="Telefono">
+           <input type="text" name="Telefono" id="Telefono" maxlength="8"
+       oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
         </div>
       </div>
 
@@ -64,7 +65,7 @@ if (!isset($_SESSION['correo'])) { http_response_code(401); exit('No autorizado'
         <div class="icon-slot"></div>
         <div class="form-field">
           <label for="Email">Email</label>
-          <input type="email" name="Email" id="Email">
+          <input type="text" name="Email" id="Email" required placeholder="usuario@gmail.com">
         </div>
       </div>
 
@@ -72,7 +73,7 @@ if (!isset($_SESSION['correo'])) { http_response_code(401); exit('No autorizado'
         <div class="icon-slot"></div>
         <div class="form-field">
           <label for="Direccion">Dirección</label>
-          <input type="text" name="Direccion" id="Direccion">
+          <input type="text" name="Direccion" id="Direccion" required>
         </div>
       </div>
 

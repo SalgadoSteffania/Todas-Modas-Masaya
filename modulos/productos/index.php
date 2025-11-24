@@ -88,7 +88,7 @@ if ($resCat) {
         <div class="icon-slot"></div>
         <div class="form-field">
           <label for="Marca">Marca</label>
-          <input type="text" name="Marca" id="Marca">
+          <input type="text" name="Marca" id="Marca" required>
         </div>
       </div>
 
@@ -104,7 +104,7 @@ if ($resCat) {
         <div class="icon-slot"></div>
         <div class="form-field">
           <label for="Descripcion">Descripción</label>
-          <input type="text" name="Descripcion" id="Descripcion">
+          <input type="text" name="Descripcion" id="Descripcion" required>
         </div>
       </div>
 
@@ -112,7 +112,7 @@ if ($resCat) {
         <div class="icon-slot"></div>
         <div class="form-field">
           <label for="Talla">Talla</label>
-          <input type="text" name="Talla" id="Talla">
+          <input type="text" name="Talla" id="Talla" required>
         </div>
       </div>
 
@@ -120,7 +120,7 @@ if ($resCat) {
         <div class="icon-slot"></div>
         <div class="form-field">
           <label for="Color">Color</label>
-          <input type="text" name="Color" id="Color">
+          <input type="text" name="Color" id="Color" required>
         </div>
       </div>
 
@@ -128,7 +128,7 @@ if ($resCat) {
         <div class="icon-slot"></div>
         <div class="form-field">
           <label for="Cantidad">Cantidad</label>
-          <input type="number" name="Cantidad" id="Cantidad" min="0" required>
+          <input type="number" name="Cantidad" id="Cantidad" value="0" min="0" required>
         </div>
       </div>
 
