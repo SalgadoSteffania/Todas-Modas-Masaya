@@ -1,15 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION['correo'])) {
-    http_response_code(401);
-    header('Content-Type: application/json');
-    echo json_encode(['ok' => false, 'msg' => 'No autorizado']);
-    exit;
-}
-
+if (!isset($_SESSION['correo'])) { http_response_code(401); exit; }
 require_once dirname(__DIR__, 2) . '/conexion.php';
-header('Content-Type: application/json; charset=utf-8');
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 
 try {
     $tipo  = $_GET['tipo']  ?? '';
@@ -57,19 +50,19 @@ try {
                 IFNULL(vent.CantVendida,0) AS CantVendida,
                 p.Precio_de_Venta,
                 IFNULL(vent.TotalVendido,0) AS TotalGanado
-              FROM Producto p
-              JOIN Categoria c ON c.IdCategoria = p.IdCategoria
+              FROM producto p
+              JOIN categoria c ON c.IdCategoria = p.IdCategoria
               LEFT JOIN (
                 SELECT dc.IdProducto, SUM(dc.Cantidad) AS CantComprada
-                FROM Detalle_Compra dc
-                JOIN Compra co ON co.IdCompra = dc.IdCompra
+                FROM detalle_compra dc
+                JOIN compra co ON co.IdCompra = dc.IdCompra
                 WHERE co.Fecha BETWEEN ? AND ?
                 GROUP BY dc.IdProducto
               ) comp ON comp.IdProducto = p.IdProducto
               LEFT JOIN (
                 SELECT ds.IdProducto, SUM(ds.Cantidad) AS CantVendida, SUM(ds.Subtotal) AS TotalVendido
-                FROM Detalle_de_salida ds
-                JOIN Salida_de_stock s ON s.IdVenta = ds.IdVenta
+                FROM detalle_de_salida ds
+                JOIN salida_de_stock s ON s.IdVenta = ds.IdVenta
                 WHERE s.Fecha BETWEEN ? AND ?
                 GROUP BY ds.IdProducto
               ) vent ON vent.IdProducto = p.IdProducto
@@ -132,12 +125,12 @@ try {
                 dc.Cantidad,
                 dc.PrecioUnitario,
                 dc.Subtotal
-              FROM Compra co
-              JOIN Usuario u         ON u.IdUsuario    = co.IdUsuario
-              JOIN Proveedor pr      ON pr.IdProveedor = co.IdProveedor
-              JOIN Detalle_Compra dc ON dc.IdCompra    = co.IdCompra
-              JOIN Producto p        ON p.IdProducto   = dc.IdProducto
-              JOIN Categoria cat     ON cat.IdCategoria = p.IdCategoria
+              FROM compra co
+              JOIN usuario u         ON u.IdUsuario    = co.IdUsuario
+              JOIN proveedor pr      ON pr.IdProveedor = co.IdProveedor
+              JOIN detalle_Compra dc ON dc.IdCompra    = co.IdCompra
+              JOIN producto p        ON p.IdProducto   = dc.IdProducto
+              JOIN categoria cat     ON cat.IdCategoria = p.IdCategoria
               WHERE co.Fecha BETWEEN ? AND ?
             ";
 
@@ -195,9 +188,9 @@ try {
                 n.SalarioBruto,
                 n.DeduccionTotal,
                 n.SalarioNeto
-              FROM Nomina n
-              JOIN Empleado e ON e.Cedula  = n.Cedula
-              JOIN Cargo    c ON c.IdCargo = e.IdCargo
+              FROM nomina n
+              JOIN empleado e ON e.Cedula  = n.Cedula
+              JOIN cargo    c ON c.IdCargo = e.IdCargo
               WHERE n.FechaRegistro BETWEEN ? AND ?
             ";
 
@@ -248,10 +241,10 @@ try {
                 s.Metodo_de_pago,
                 SUM(ds.Cantidad) AS CantProductos,
                 SUM(ds.Subtotal) AS TotalVenta
-              FROM Salida_de_stock s
-              JOIN Usuario u ON u.IdUsuario = s.IdUsuario
-              JOIN Cliente c ON c.IdCliente = s.IdCliente
-              JOIN Detalle_de_salida ds ON ds.IdVenta = s.IdVenta
+              FROM salida_de_stock s
+              JOIN usuario u ON u.IdUsuario = s.IdUsuario
+              JOIN cliente c ON c.IdCliente = s.IdCliente
+              JOIN detalle_de_salida ds ON ds.IdVenta = s.IdVenta
               WHERE s.Fecha BETWEEN ? AND ?
             ";
 

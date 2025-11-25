@@ -6,7 +6,7 @@ if (!isset($_SESSION['correo'])) {
 }
 
 require_once dirname(__DIR__, 2) . '/conexion.php';
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 
 
 $categorias  = [];
@@ -16,19 +16,19 @@ $empleados   = [];
 $clientes    = [];
 
 try {
-  $res = $conexion->query("SELECT IdCategoria, Descripcion FROM Categoria ORDER BY Descripcion ASC");
+  $res = $conexion->query("SELECT IdCategoria, Descripcion FROM categoria ORDER BY Descripcion ASC");
   while ($row = $res->fetch_assoc()) $categorias[] = $row;
 
-  $res = $conexion->query("SELECT IdProducto, Nombre FROM Producto ORDER BY Nombre ASC");
+  $res = $conexion->query("SELECT IdProducto, Nombre FROM producto ORDER BY Nombre ASC");
   while ($row = $res->fetch_assoc()) $productos[] = $row;
 
-  $res = $conexion->query("SELECT IdProveedor, Nombre FROM Proveedor ORDER BY Nombre ASC");
+  $res = $conexion->query("SELECT IdProveedor, Nombre FROM proveedor ORDER BY Nombre ASC");
   while ($row = $res->fetch_assoc()) $proveedores[] = $row;
 
-  $res = $conexion->query("SELECT Cedula, Nombre, Apellido FROM Empleado ORDER BY Nombre ASC, Apellido ASC");
+  $res = $conexion->query("SELECT Cedula, Nombre, Apellido FROM empleado ORDER BY Nombre ASC, Apellido ASC");
   while ($row = $res->fetch_assoc()) $empleados[] = $row;
 
-  $res = $conexion->query("SELECT IdCliente, Nombre, Apellido FROM Cliente ORDER BY Nombre ASC, Apellido ASC");
+  $res = $conexion->query("SELECT IdCliente, Nombre, Apellido FROM cliente ORDER BY Nombre ASC, Apellido ASC");
   while ($row = $res->fetch_assoc()) $clientes[] = $row;
 
 } catch (Exception $e) {
