@@ -6,7 +6,7 @@ if (!isset($_SESSION['correo'])) {
 }
 
 require_once dirname(__DIR__, 2) . '/conexion.php';
-require_once dirname(__DIR__, 2) . '/tcpdf/tcpdf.php';
+require_once dirname(__DIR__, 2) . '/TCPDF/tcpdf.php';
 
 
 
