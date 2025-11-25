@@ -17,21 +17,21 @@ if ($Cedula==='' || $Usuario==='' || $PassRaw==='' || $IdRol<=0) {
 $Pass = md5($PassRaw);
 
 /* Validaciones de unicidad (usuario, correo opcional, cédula) */
-$stmt = $conexion->prepare("SELECT 1 FROM Usuario WHERE Nombre_de_Usuario=?");
+$stmt = $conexion->prepare("SELECT 1 FROM usuario WHERE Nombre_de_Usuario=?");
 $stmt->bind_param("s", $Usuario); $stmt->execute(); $stmt->store_result();
 if ($stmt->num_rows>0){ echo json_encode(['ok'=>false,'msg'=>'El usuario ya existe']); exit; }
 
 if ($Correo!==''){
-  $stmt = $conexion->prepare("SELECT 1 FROM Usuario WHERE Correo=?");
+  $stmt = $conexion->prepare("SELECT 1 FROM usuario WHERE Correo=?");
   $stmt->bind_param("s", $Correo); $stmt->execute(); $stmt->store_result();
   if ($stmt->num_rows>0){ echo json_encode(['ok'=>false,'msg'=>'El correo ya está en uso']); exit; }
 }
 
-$stmt = $conexion->prepare("SELECT 1 FROM Usuario WHERE Cedula=?");
+$stmt = $conexion->prepare("SELECT 1 FROM usuario WHERE Cedula=?");
 $stmt->bind_param("s", $Cedula); $stmt->execute(); $stmt->store_result();
 if ($stmt->num_rows>0){ echo json_encode(['ok'=>false,'msg'=>'La cédula ya tiene usuario']); exit; }
 
-$stmt = $conexion->prepare("INSERT INTO Usuario (Cedula, Nombre_de_Usuario, Correo, Contrasena, IdRol)
+$stmt = $conexion->prepare("INSERT INTO usuario (Cedula, Nombre_de_Usuario, Correo, Contrasena, IdRol)
                             VALUES (?, ?, ?, ?, ?)");
 $stmt->bind_param("ssssi", $Cedula, $Usuario, $Correo, $Pass, $IdRol);
 $ok = $stmt->execute();

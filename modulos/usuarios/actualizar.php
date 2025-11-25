@@ -15,29 +15,29 @@ if ($IdUsuario<=0 || $Cedula==='' || $Usuario==='' || $IdRol<=0) {
 }
 
 /* Unicidad excluyendo el propio registro */
-$stmt = $conexion->prepare("SELECT 1 FROM Usuario WHERE Nombre_de_Usuario=? AND IdUsuario<>?");
+$stmt = $conexion->prepare("SELECT 1 FROM usuario WHERE Nombre_de_Usuario=? AND IdUsuario<>?");
 $stmt->bind_param("si", $Usuario, $IdUsuario); $stmt->execute(); $stmt->store_result();
 if ($stmt->num_rows>0){ echo json_encode(['ok'=>false,'msg'=>'El usuario ya existe']); exit; }
 
 if ($Correo!==''){
-  $stmt = $conexion->prepare("SELECT 1 FROM Usuario WHERE Correo=? AND IdUsuario<>?");
+  $stmt = $conexion->prepare("SELECT 1 FROM usuario WHERE Correo=? AND IdUsuario<>?");
   $stmt->bind_param("si", $Correo, $IdUsuario); $stmt->execute(); $stmt->store_result();
   if ($stmt->num_rows>0){ echo json_encode(['ok'=>false,'msg'=>'El correo ya está en uso']); exit; }
 }
 
 /* Cédula única (un empleado solo un usuario) */
-$stmt = $conexion->prepare("SELECT 1 FROM Usuario WHERE Cedula=? AND IdUsuario<>?");
+$stmt = $conexion->prepare("SELECT 1 FROM usuario WHERE Cedula=? AND IdUsuario<>?");
 $stmt->bind_param("si", $Cedula, $IdUsuario); $stmt->execute(); $stmt->store_result();
 if ($stmt->num_rows>0){ echo json_encode(['ok'=>false,'msg'=>'La cédula ya tiene usuario']); exit; }
 
 if ($PassRaw!==''){ // actualizar con nueva contraseña
   $Pass = md5($PassRaw);
-  $stmt = $conexion->prepare("UPDATE Usuario
+  $stmt = $conexion->prepare("UPDATE usuario
                               SET Cedula=?, Nombre_de_Usuario=?, Correo=?, Contrasena=?, IdRol=?
                               WHERE IdUsuario=?");
   $stmt->bind_param("ssssii", $Cedula, $Usuario, $Correo, $Pass, $IdRol, $IdUsuario);
 } else {           // mantener contraseña
-  $stmt = $conexion->prepare("UPDATE Usuario
+  $stmt = $conexion->prepare("UPDATE usuario
                               SET Cedula=?, Nombre_de_Usuario=?, Correo=?, IdRol=?
                               WHERE IdUsuario=?");
   $stmt->bind_param("sssii", $Cedula, $Usuario, $Correo, $IdRol, $IdUsuario);
