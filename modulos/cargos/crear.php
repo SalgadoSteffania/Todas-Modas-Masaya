@@ -9,7 +9,7 @@ if ($Nombre === '') {
   exit;
 }
 
-$stmt = $conexion->prepare("INSERT INTO Cargo (Nombre) VALUES (?)");
+$stmt = $conexion->prepare("INSERT INTO cargo (Nombre) VALUES (?)");
 $stmt->bind_param("s", $Nombre);
 
 $ok = $stmt->execute();

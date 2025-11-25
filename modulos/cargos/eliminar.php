@@ -9,7 +9,7 @@ if ($IdCargo <= 0) {
   exit;
 }
 
-$stmt = $conexion->prepare("DELETE FROM Cargo WHERE IdCargo = ?");
+$stmt = $conexion->prepare("DELETE FROM cargo WHERE IdCargo = ?");
 $stmt->bind_param("i", $IdCargo);
 
 $ok = $stmt->execute();

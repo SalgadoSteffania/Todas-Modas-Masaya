@@ -12,7 +12,7 @@ if ($IdCargo <= 0 || $Nombre === '') {
 }
 
 $stmt = $conexion->prepare(
-  "UPDATE Cargo
+  "UPDATE cargo
    SET Nombre = ?
    WHERE IdCargo = ?"
 );
