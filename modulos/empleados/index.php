@@ -6,7 +6,7 @@ require_once dirname(__DIR__, 2) . '/conexion.php';
 
 // Traer cargos para el combobox
 $cargos = [];
-$q = $conexion->query("SELECT IdCargo, Nombre FROM Cargo ORDER BY Nombre");
+$q = $conexion->query("SELECT IdCargo, Nombre FROM cargo ORDER BY Nombre");
 while ($row = $q->fetch_assoc()) $cargos[] = $row;
 ?>
 <div class="vistas-wrapper">

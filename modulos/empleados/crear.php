@@ -14,7 +14,7 @@ if ($Cedula==='' || $IdCargo<=0 || $Nombre==='' || $Apellido==='') {
   echo json_encode(['ok'=>false,'msg'=>'Campos obligatorios faltantes']); exit;
 }
 
-$stmt = $conexion->prepare("INSERT INTO Empleado (Cedula, IdCargo, Nombre, Apellido, Direccion, Telefono)
+$stmt = $conexion->prepare("INSERT INTO empleado (Cedula, IdCargo, Nombre, Apellido, Direccion, Telefono)
                             VALUES (?, ?, ?, ?, ?, ?)");
 $stmt->bind_param("sissss", $Cedula, $IdCargo, $Nombre, $Apellido, $Direccion, $Telefono);
 

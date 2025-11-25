@@ -15,7 +15,7 @@ if ($original==='' || $Cedula==='' || $IdCargo<=0 || $Nombre==='' || $Apellido==
   echo json_encode(['ok'=>false,'msg'=>'Campos obligatorios faltantes']); exit;
 }
 
-$stmt = $conexion->prepare("UPDATE Empleado
+$stmt = $conexion->prepare("UPDATE empleado
   SET Cedula=?, IdCargo=?, Nombre=?, Apellido=?, Direccion=?, Telefono=?
   WHERE Cedula=?");
 $stmt->bind_param("sisssss", $Cedula, $IdCargo, $Nombre, $Apellido, $Direccion, $Telefono, $original);
