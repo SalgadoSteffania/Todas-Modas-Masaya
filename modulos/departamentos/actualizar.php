@@ -12,7 +12,7 @@ if ($IdDepartamento <= 0 || $Nombre === '') {
 }
 
 $stmt = $conexion->prepare(
-  "UPDATE Departamento
+  "UPDATE departamento
    SET Nombre = ?
    WHERE IdDepartamento = ?"
 );

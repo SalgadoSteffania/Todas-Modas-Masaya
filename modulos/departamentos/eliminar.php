@@ -9,7 +9,7 @@ if ($IdDepartamento <= 0) {
   exit;
 }
 
-$stmt = $conexion->prepare("DELETE FROM Departamento WHERE IdDepartamento = ?");
+$stmt = $conexion->prepare("DELETE FROM departamento WHERE IdDepartamento = ?");
 $stmt->bind_param("i", $IdDepartamento);
 
 $ok = $stmt->execute();

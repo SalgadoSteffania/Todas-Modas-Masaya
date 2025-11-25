@@ -9,7 +9,7 @@ if ($Nombre === '') {
   exit;
 }
 
-$stmt = $conexion->prepare("INSERT INTO Departamento (Nombre) VALUES (?)");
+$stmt = $conexion->prepare("INSERT INTO departamento (Nombre) VALUES (?)");
 $stmt->bind_param("s", $Nombre);
 
 $ok = $stmt->execute();

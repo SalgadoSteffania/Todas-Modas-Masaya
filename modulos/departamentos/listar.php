@@ -6,7 +6,7 @@ require_once dirname(__DIR__, 2) . '/conexion.php';
 header('Content-Type: application/json; charset=utf-8');
 
 $sql = "SELECT IdDepartamento, Nombre
-        FROM Departamento
+        FROM departamento
         ORDER BY IdDepartamento DESC";
 $res = $conexion->query($sql);
 
