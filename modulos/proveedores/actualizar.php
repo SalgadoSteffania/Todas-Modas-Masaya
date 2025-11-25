@@ -14,7 +14,7 @@ if ($IdProveedor <= 0 || $Nombre === '') {
 }
 
 $stmt = $conexion->prepare(
-  "UPDATE Proveedor
+  "UPDATE proveedor
    SET Nombre = ?, Telefono = ?, Email = ?, Direccion = ?
    WHERE IdProveedor = ?"
 );

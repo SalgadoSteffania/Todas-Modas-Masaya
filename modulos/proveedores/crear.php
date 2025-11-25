@@ -13,7 +13,7 @@ if ($Nombre === '') {
 }
 
 $stmt = $conexion->prepare(
-  "INSERT INTO Proveedor (Nombre, Telefono, Email, Direccion) VALUES (?, ?, ?, ?)"
+  "INSERT INTO proveedor (Nombre, Telefono, Email, Direccion) VALUES (?, ?, ?, ?)"
 );
 $stmt->bind_param("ssss", $Nombre, $Telefono, $Email, $Direccion);
 

@@ -6,7 +6,7 @@ require_once dirname(__DIR__, 2) . '/conexion.php';
 header('Content-Type: application/json; charset=utf-8');
 
 $sql = "SELECT IdProveedor, Nombre, Telefono, Email, Direccion, FechaRegistro
-        FROM Proveedor
+        FROM proveedor
         ORDER BY IdProveedor DESC";
 $res = $conexion->query($sql);
 
